@@ -1,7 +1,7 @@
 function pingPong(goal) {
   var output = [];
   for (var i = 1; i <= goal; i++) {
-    if (i % 15 == 0) {
+    if (i % 15 === 0) {
       output.push("ping-pong");
     } else if (i % 3 === 0) {
       output.push("ping");
@@ -33,5 +33,19 @@ $(document).ready(function(){
     var email = $('#email').val();
     $('#signup').hide();
     $('#solution').prepend('<p>Thank you, ' + email + ' has been added to our list!</p>');
+  });
+});
+
+var apiKey = "9b725badda2db5e91674eb1c72cd1aeb";
+
+$(document).ready(function() {
+  $('#weatherLocation').click(function() {
+    var city = $('#location').val();
+    $('#location').val("");
+    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
+      $('.showWeather').text("The humidity in " + city + " is " + response.main.humidity + "%");
+    }).fail(function(error) {
+      $('.showWeather').text(error.responseJSON.message);
+    });
   });
 });
